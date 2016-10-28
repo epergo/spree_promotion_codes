@@ -1,8 +1,9 @@
 # app/models/spree/promotion.rb
 Spree::Promotion.class_eval do
   has_many :promotion_codes, dependent: :destroy
+  alias_method :codes, :promotion_codes
 
-  scope :coupons, -> { joins(:promotion_codes).group("#{table_name}.id").having("count(*) > 0") }
+  scope :coupons, -> { joins(:promotion_codes).group("#{table_name}.id").having("count(*) > ?", 0) }
 
   self.whitelisted_ransackable_attributes = %w(path promotion_category_id)
 
