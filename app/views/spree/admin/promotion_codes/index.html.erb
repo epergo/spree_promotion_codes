@@ -1,0 +1,41 @@
+<%# Place for new code form %>
+<% content_for :page_actions do %>
+  <%= button_link_to(Spree.t(:new_promotion_code),
+                     new_admin_promotion_promotion_code_url,
+                     class: "btn-success",
+                     icon: 'add',
+                     id: 'admin_new_promotion_action') %>
+<% end if can? :create, Spree::PromotionCode %>
+
+<% if @collection.any? %>
+  <table class="table">
+    <thead data-hook="promotion_codes_header">
+      <tr>
+        <th><%= Spree.t(:code) %></th>
+        <th><%= Spree.t(:disabled) %></th>
+        <th><%= Spree.t(:times_used) %></th>
+        <th><%= Spree.t(:max_uses) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @collection.each do |promotion_code| %>
+         <tr id="<%= spree_dom_id promotion_code %>" <%= 'style="color:red;"' if promotion_code.disabled? %> data-hook="promotion_codes_row">
+           <td><%= promotion_code.code %></td>
+           <td><%= promotion_code.disabled %></td>
+           <td>TODO</td>
+           <td>TODO</td>
+           <td class="actions actions-2 text-right">
+             <%= link_to_edit(promotion_code, no_text: true) if can?(:edit, promotion_code) %>
+             <%= link_to_delete(promotion_code, no_text: true) if can?(:destroy, promotion_code) %>
+           </td>
+         </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found alert alert-info">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::PromotionCode)) %>,
+      <%= link_to(Spree.t(:add_one), spree.new_admin_promotion_promotion_code_path(@promotion)) if can? :create, Spree::PromotionCode %>!
+  </div>
+<% end %>
