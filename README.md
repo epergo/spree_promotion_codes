@@ -1,18 +1,22 @@
 SpreePromotionCodes
 ===================
+<a href="https://codeclimate.com/github/epergo/spree_promotion_codes"><img src="https://codeclimate.com/github/epergo/spree_promotion_codes/badges/gpa.svg"
+/></a>
+<a
+href="https://codeclimate.com/github/epergo/spree_promotion_codes/coverage"><img
+src="https://codeclimate.com/github/epergo/spree_promotion_codes/badges/coverage.svg"
+/></a>
+<a href="https://travis-ci.org/epergo/spree_promotion_codes.svg?branch=master"><img
+src="https://travis-ci.org/epergo/spree_promotion_codes.svg?branch=master"/></a>
 
-Introduction goes here.
+Spree extension to allow promotions to be reedemed with more than 1 code
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
   ```ruby
-  gem 'spree_promotion_codes', github: '[your-github-handle]/spree_promotion_codes', branch: 'X-X-stable'
+  gem 'spree_promotion_codes', github: 'epergo/spree_promotion_codes', branch: '3-0-stable'
   ```
-
-  The `branch` option is important: it must match the version of Spree you're using.
-  For example, use `3-1-stable` if you're using Spree `3-1-stable` or any `3.1.x` version.
-
 2. Install the gem using Bundler:
   ```ruby
   bundle install
@@ -36,18 +40,3 @@ bundle
 bundle exec rake
 ```
 
-When testing your applications integration with this extension you may use it's factories.
-Simply add this require statement to your spec_helper:
-
-```ruby
-require 'spree_promotion_codes/factories'
-```
-
-
-## Contributing
-
-If you'd like to contribute, please take a look at the
-[instructions](CONTRIBUTING.md) for installing dependencies and crafting a good
-pull request.
-
-Copyright (c) 2016 [name of extension creator], released under the New BSD License
