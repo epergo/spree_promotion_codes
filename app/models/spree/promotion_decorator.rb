@@ -17,4 +17,12 @@ Spree::Promotion.class_eval do
       .where("#{promotion_codes_table}.code = ?", coupon_code.strip.downcase)
       .first
   end
+
+  private
+
+  def normalize_blank_values
+    %w(path).each do |column|
+      self[column] = nil if self[column].blank?
+    end
+  end
 end
