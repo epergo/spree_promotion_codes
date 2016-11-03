@@ -23,7 +23,7 @@
          <tr id="<%= spree_dom_id promotion_code %>" <%= 'style="color:red;"' if promotion_code.disabled? %> data-hook="promotion_codes_row">
            <td><%= promotion_code.code %></td>
            <td><%= promotion_code.disabled %></td>
-           <td>TODO</td>
+           <td><%= promotion_code.times_used %></td>
            <td>TODO</td>
            <td class="actions actions-2 text-right">
              <%= link_to_edit(promotion_code, no_text: true) if can?(:edit, promotion_code) %>

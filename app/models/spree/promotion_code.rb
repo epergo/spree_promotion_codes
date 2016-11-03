@@ -10,6 +10,7 @@ module Spree
         .eligible
         .where(source_id: promotion_id)
         .where("spree_orders_promotions.promotion_code_id = ?", id)
+        .count
     end
   end
 end
