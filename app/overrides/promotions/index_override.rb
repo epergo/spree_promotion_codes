@@ -8,3 +8,9 @@ Deface::Override.new(:virtual_path => 'spree/admin/promotions/index',
 Deface::Override.new(:virtual_path => 'spree/admin/promotions/index',
                      :name => 'code_cont',
                      :remove => "erb[loud]:contains('text_field :code_cont')")
+
+Deface::Override.new(:virtual_path => 'spree/admin/promotions/index',
+                     :name => 'table',
+                     :replace => "table",
+                     :partial => "spree/admin/shared/index_table")
+
