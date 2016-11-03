@@ -3,6 +3,9 @@ Spree::Promotion.class_eval do
   has_many :promotion_codes, dependent: :destroy
   alias_method :codes, :promotion_codes
 
+  has_many :orders_promotions
+  has_many :orders, through: :orders_promotions
+
   scope :coupons,    -> { where("id IN (SELECT DISTINCT(promotion_id) FROM #{promotion_codes_table})") }
   scope :no_coupons, -> { where("id NOT IN (SELECT DISTINCT(promotion_id) FROM #{promotion_codes_table})") }
 
@@ -16,6 +19,43 @@ Spree::Promotion.class_eval do
     joins("INNER JOIN #{promotion_codes_table}")
       .where("#{promotion_codes_table}.code = ?", coupon_code.strip.downcase)
       .first
+  end
+
+  def activate(payload)
+    order = payload[:order]
+    return unless self.class.order_activatable?(order)
+
+    payload[:promotion] = self
+
+    # Track results from actions to see if any action has been taken.
+    # Actions should return nil/false if no action has been taken.
+    # If an action returns true, then an action has been taken.
+    results = actions.map do |action|
+      action.perform(payload)
+    end
+    # If an action has been taken, report back to whatever activated this promotion.
+    action_taken = results.include?(true)
+
+    if action_taken
+      # Connect to the order
+      # Create the join_table entry
+      # If the promotion has been unlocked thanks to a code, add the
+      # code to the entry
+
+      new_orders_promotions = Spree::OrdersPromotion.new(promotion_id: id, order_id: order.id)
+      if order.coupon_code
+        # User has entered a coupon code
+        # Check if this promotion includes the code
+        if codes.pluck(:code).include?(order.coupon_code)
+          new_orders_promotions.promotion_code_id = Spree::PromotionCode.find_by(code: order.coupon_code).id
+        end
+      end
+
+      new_orders_promotions.save
+      self.save
+    end
+
+    return action_taken
   end
 
   private
