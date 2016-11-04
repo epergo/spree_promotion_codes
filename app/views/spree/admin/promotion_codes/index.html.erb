@@ -14,7 +14,7 @@
         <th><%= Spree.t(:code) %></th>
         <th><%= Spree.t(:disabled) %></th>
         <th><%= Spree.t(:times_used) %></th>
-        <th><%= Spree.t(:max_uses) %></th>
+        <th><%= Spree.t(:usage_limit) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -23,8 +23,8 @@
          <tr id="<%= spree_dom_id promotion_code %>" <%= 'style="color:red;"' if promotion_code.disabled? %> data-hook="promotion_codes_row">
            <td><%= promotion_code.code %></td>
            <td><%= humanize_disabled(promotion_code.disabled) %></td>
-           <td><%= promotion_code.times_used %></td>
-           <td>TODO</td>
+           <td><%= promotion_code.times_used_count %></td>
+           <td><%= promotion_code.usage_limit.nil? ? '∞' : promotion_code.usage_limit  %></td>
            <td class="actions actions-2 text-right">
              <%= link_to_edit(promotion_code, no_text: true) if can?(:edit, promotion_code) %>
              <%= link_to_delete(promotion_code, no_text: true) if can?(:destroy, promotion_code) %>
