@@ -16,8 +16,9 @@ module Spree
       times_used.count
     end
 
+    # Check if a code has been used less than his limit
     def limit_exceeded?
-      usage_limit.present? && usage_limit >= times_used_count
+      usage_limit.present? && usage_limit <= times_used_count
     end
 
     class << self
