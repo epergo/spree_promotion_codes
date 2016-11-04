@@ -22,7 +22,7 @@
       <% @collection.each do |promotion_code| %>
          <tr id="<%= spree_dom_id promotion_code %>" <%= 'style="color:red;"' if promotion_code.disabled? %> data-hook="promotion_codes_row">
            <td><%= promotion_code.code %></td>
-           <td><%= promotion_code.disabled %></td>
+           <td><%= humanize_disabled(promotion_code.disabled) %></td>
            <td><%= promotion_code.times_used %></td>
            <td>TODO</td>
            <td class="actions actions-2 text-right">
