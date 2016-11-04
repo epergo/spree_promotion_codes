@@ -18,7 +18,7 @@ Spree::Promotion.class_eval do
   # Returns the promotion associated with the coupon code specified
   # Doesn't return the promotion if the code is disabled
   def self.with_coupon_code(coupon_code)
-    joins("INNER JOIN #{promotion_codes_table}")
+    joins("INNER JOIN #{promotion_codes_table} ON #{promotion_codes_table}.promotion_id = #{table_name}.id")
       .where("#{promotion_codes_table}.code = ? AND #{promotion_codes_table}.disabled = ?", coupon_code.strip.downcase, false)
       .first
   end
