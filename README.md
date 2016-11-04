@@ -6,7 +6,7 @@ SpreePromotionCodes
 href="https://codeclimate.com/github/epergo/spree_promotion_codes/coverage"><img
 src="https://codeclimate.com/github/epergo/spree_promotion_codes/badges/coverage.svg"
 /></a>
-<a href="https://travis-ci.org/epergo/spree_promotion_codesr"><img
+<a href="https://travis-ci.org/epergo/spree_promotion_codes"><img
 src="https://travis-ci.org/epergo/spree_promotion_codes.svg?branch=master"/></a>
 
 Spree extension to allow promotions to be reedemed with more than 1 code
