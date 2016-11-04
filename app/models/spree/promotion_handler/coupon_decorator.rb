@@ -2,6 +2,29 @@
 Spree::PromotionHandler::Coupon.class_eval do
   private
 
+  def handle_present_promotion(promotion)
+    return code_usage_limit_exceeded if Spree::PromotionCode.usage_limit_exceeded?(order.coupon_code)
+    return promotion_usage_limit_exceeded if promotion.usage_limit_exceeded?(order)
+    return promotion_applied if promotion_exists_on_order?(order, promotion)
+    unless promotion.eligible?(order)
+      self.error = promotion.eligibility_errors.full_messages.first unless promotion.eligibility_errors.blank?
+      return (self.error || ineligible_for_this_order)
+    end
+
+    # If any of the actions for the promotion return `true`,
+    # then result here will also be `true`.
+    result = promotion.activate(:order => order)
+    if result
+      determine_promotion_application_result
+    else
+      set_error_code :coupon_code_unknown_error
+    end
+  end
+
+  def code_usage_limit_exceeded
+    set_error_code :coupon_code_max_usage
+  end
+
   def determine_promotion_application_result
     # Check for applied adjustments.
     discount = order.all_adjustments.promotion.eligible.detect do |p|
