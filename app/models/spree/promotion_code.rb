@@ -25,7 +25,7 @@ module Spree
       def usage_limit_exceeded?(code)
         return false if code.nil?
 
-        pc = find_by!(code: code)
+        pc = find_by!(code: code.downcase)
         pc.limit_exceeded?
       end
     end

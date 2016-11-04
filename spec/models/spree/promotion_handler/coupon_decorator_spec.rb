@@ -278,7 +278,8 @@ module Spree
           end
           context "and multiple quantity per line item" do
             before(:each) do
-              twnty_off = Promotion.create name: "promo", :code => "20off"
+              twnty_off = Promotion.create name: "promo"
+              PromotionCode.create(code: '20off', promotion_id: twnty_off.id)
               twnty_off_calc = Calculator::FlatRate.new(preferred_amount: 20)
               Promotion::Actions::CreateItemAdjustments.create(promotion: twnty_off,
                                                                calculator: twnty_off_calc)
