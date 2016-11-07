@@ -12,5 +12,5 @@ Deface::Override.new(:virtual_path => 'spree/admin/promotions/index',
 Deface::Override.new(:virtual_path => 'spree/admin/promotions/index',
                      :name => 'table',
                      :replace => "table",
-                     :partial => "spree/admin/shared/index_table")
+                     :partial => "spree/admin/shared/index_promotions_table")
 
