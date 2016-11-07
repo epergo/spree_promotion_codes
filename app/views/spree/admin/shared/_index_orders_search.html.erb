@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= label_tag :with_promotion_code, Spree.t(:with_promotion_code) %>
+      <%= f.select :with_promotion_code, Spree::PromotionCode.pluck(:code), {:include_blank => true}, :class => 'select2' %>
+    </div>
+  </div>
+</div>
