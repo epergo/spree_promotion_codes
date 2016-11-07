@@ -5,11 +5,15 @@ module Spree
     validates :code, uniqueness: true
 
     def times_used
-      Spree::Adjustment
-        .joins("INNER JOIN spree_orders_promotions ON spree_orders_promotions.order_id = spree_adjustments.adjustable_id")
-        .eligible
-        .where(source_id: promotion_id)
-        .where("spree_orders_promotions.promotion_code_id = ?", id)
+      # Orders that have used the code
+      orders_ids = Spree::OrdersPromotion.where(promotion_code_id: id).pluck(:order_id)
+
+      # Promotion Actions associated with the promotion
+      promotion_actions_ids = promotion.actions.pluck(:id)
+
+      # Eligible adjustments resulting of the promotion actions and only in orders
+      # that have used the code
+      Spree::Adjustment.eligible.where(source_id: promotion_actions_ids, order_id: orders_ids)
     end
 
     def times_used_count
@@ -37,4 +41,3 @@ module Spree
     end
   end
 end
-
