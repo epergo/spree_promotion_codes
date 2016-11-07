@@ -16,6 +16,12 @@ module Spree
       times_used.count
     end
 
+    # Orders that have used this code
+    def orders
+      order_ids = times_used.pluck(:order_id)
+      Spree::Order.where(id: order_ids)
+    end
+
     # Check if a code has been used less than his limit
     def limit_exceeded?
       usage_limit.present? && usage_limit <= times_used_count
