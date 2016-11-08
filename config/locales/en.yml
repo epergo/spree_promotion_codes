@@ -1,5 +1,7 @@
 en:
   spree:
+    without_codes_used: 'No codes used'
+    codes_used: 'Codes used'
     new_promotion_code: 'New Code'
     with_promotion_code: 'With promotion code'
     disabled: Disabled

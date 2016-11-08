@@ -17,6 +17,21 @@ Spree::Order.class_eval do
     .where("#{orders_promotions_table}.promotion_code_id = ?", promotion_code.id)
   end
 
+  # List all codes used in this order
+  def codes_used
+    # Promotion actions applied in this order
+    promo_actions_ids = adjustments.eligible.pluck(:source_id)
+
+    # Promotion codes used (ids)
+    promo_codes_used = Spree::OrdersPromotion
+      .joins(:promotion => :promotion_actions)
+      .where('spree_promotion_actions.id IN (?) AND spree_orders_promotions.order_id = ?', promo_actions_ids, id)
+      .pluck(:promotion_code_id)
+
+    # List of codes used
+    Spree::PromotionCode.where(id: promo_codes_used).pluck(:code).join(', ')
+  end
+
   def self.orders_promotions_table
     reflect_on_association(:orders_promotions).table_name
   end
