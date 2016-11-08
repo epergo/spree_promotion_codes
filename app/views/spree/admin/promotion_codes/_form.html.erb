@@ -16,7 +16,7 @@
 
       <div class="form-group" data-hook="usage_limit">
         <%= f.field_container :usage_limit do %>
-          <%= f.label :usage_limit %>
+          <%= f.label :usage_limit, Spree.t('usage_limit') %>
           <%= f.number_field :usage_limit, :min => 0, :class => 'form-control' %>
           <p class="help-block">
           <%= Spree.t(:current_promotion_code_usage, :count => @promotion_code.times_used_count) %>

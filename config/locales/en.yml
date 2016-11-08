@@ -1,5 +1,13 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  spree:
+    new_promotion_code: 'New Code'
+    with_promotion_code: 'With promotion code'
+    disabled: Disabled
+    times_used: Times Used
+    current_promotion_code_usage: 'Current usage: %{count}'
+    promotion_code:
+      disabled: Inactive
+      not_disabled: Active
+    actions:
+      manage_codes: Manage Codes
+

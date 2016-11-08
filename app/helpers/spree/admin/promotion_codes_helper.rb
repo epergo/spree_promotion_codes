@@ -3,9 +3,9 @@ module Spree
     module PromotionCodesHelper
       def humanize_disabled(disabled)
         if disabled
-          Spree.t(:say_yes)
+          Spree.t('promotion_code.disabled')
         else
-          Spree.t(:say_no)
+          Spree.t('promotion_code.not_disabled')
         end
       end
     end

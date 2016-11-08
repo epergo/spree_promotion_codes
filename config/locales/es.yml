@@ -1,0 +1,13 @@
+es:
+  spree:
+    new_promotion_code: 'Nuevo código'
+    with_promotion_code: 'Con código de promoción'
+    disabled: Deshabilitado
+    times_used: Veces usado
+    current_promotion_code_usage: 'Usos actuales del código: %{count}'
+    promotion_code:
+      disabled: Inactivo
+      not_disabled: Activo
+    actions:
+      manage_codes: Gestión de códigos
+
