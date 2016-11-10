@@ -11,25 +11,23 @@ Spree::Order.class_eval do
 
     return unless promotion_code
 
-    joins(:adjustments)
-    .merge(Spree::Adjustment.eligible)
-    .joins("INNER JOIN #{orders_promotions_table} ON #{orders_promotions_table}.order_id = spree_adjustments.adjustable_id")
-    .where("#{orders_promotions_table}.promotion_code_id = ?", promotion_code.id)
+    promo_actions_ids = promotion_code.promotion.actions.pluck('spree_promotion_actions.id')
+    orders_ids = Spree::Adjustment
+      .eligible
+      .where(source_id: promo_actions_ids)
+      .pluck(:order_id)
+
+    where(id: orders_ids)
   end
 
   # List all codes used in this order
   def codes_used
     # Promotion actions applied in this order
-    promo_actions_ids = adjustments.eligible.pluck(:source_id)
+    promo_actions_ids = Spree::Adjustment.eligible.where(order_id: id).pluck(:source_id)
+    promos_ids = Spree::Promotion.joins(:promotion_actions).where('spree_promotion_actions.id = (?)', promo_actions_ids).pluck('spree_promotions.id')
 
-    # Promotion codes used (ids)
-    promo_codes_used = Spree::OrdersPromotion
-      .joins(:promotion => :promotion_actions)
-      .where('spree_promotion_actions.id IN (?) AND spree_orders_promotions.order_id = ?', promo_actions_ids, id)
-      .pluck(:promotion_code_id)
-
-    # List of codes used
-    Spree::PromotionCode.where(id: promo_codes_used).pluck(:code).join(', ')
+    codes_used_ids = Spree::OrdersPromotion.where(promotion_id: promos_ids, order_id: id).pluck(:promotion_code_id)
+    Spree::PromotionCode.where(id: codes_used_ids).pluck(:code).join(', ')
   end
 
   def self.orders_promotions_table
