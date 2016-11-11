@@ -44,11 +44,12 @@ Spree::Promotion.class_eval do
       # If the promotion has been unlocked thanks to a code, add the
       # code to the entry
 
+      codes_downcase = codes.map { |pc| pc.code.downcase }
       new_orders_promotions = Spree::OrdersPromotion.new(promotion_id: id, order_id: order.id)
       if order.coupon_code
         # User has entered a coupon code
         # Check if this promotion includes the code
-        if codes.pluck(:code).include?(order.coupon_code)
+        if codes_downcase.include?(order.coupon_code)
           new_orders_promotions.promotion_code_id = Spree::PromotionCode.find_by(code: order.coupon_code).id
         end
       end

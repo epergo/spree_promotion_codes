@@ -9,7 +9,7 @@ module Spree
       orders_ids = Spree::OrdersPromotion.where(promotion_code_id: id).pluck(:order_id)
 
       # Promotion Actions associated with the promotion
-      promotion_actions_ids = promotion.actions.pluck(:id)
+      promotion_actions_ids = promotion.actions.pluck('spree_promotion_actions.id')
 
       # Eligible adjustments resulting of the promotion actions and only in orders
       # that have used the code
