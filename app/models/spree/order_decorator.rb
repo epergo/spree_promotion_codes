@@ -24,7 +24,7 @@ Spree::Order.class_eval do
   def codes_used
     # Promotion actions applied in this order
     promo_actions_ids = Spree::Adjustment.eligible.where(order_id: id).pluck(:source_id)
-    promos_ids = Spree::Promotion.joins(:promotion_actions).where('spree_promotion_actions.id = (?)', promo_actions_ids).pluck('spree_promotions.id')
+    promos_ids = Spree::Promotion.joins(:promotion_actions).where('spree_promotion_actions.id IN (?)', promo_actions_ids).pluck('spree_promotions.id')
 
     codes_used_ids = Spree::OrdersPromotion.where(promotion_id: promos_ids, order_id: id).pluck(:promotion_code_id)
     Spree::PromotionCode.where(id: codes_used_ids).pluck(:code).join(', ')
