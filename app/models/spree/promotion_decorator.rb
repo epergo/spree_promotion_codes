@@ -3,8 +3,8 @@ Spree::Promotion.class_eval do
   has_many :promotion_codes, dependent: :destroy
   alias_method :codes, :promotion_codes
 
-  has_many :orders_promotions
-  has_many :orders, through: :orders_promotions
+  has_many :order_promotions
+  has_many :orders, through: :order_promotions
 
   scope :coupons,    -> { where("id IN (SELECT DISTINCT(promotion_id) FROM #{promotion_codes_table})") }
   scope :no_coupons, -> { where("id NOT IN (SELECT DISTINCT(promotion_id) FROM #{promotion_codes_table})") }
@@ -45,7 +45,7 @@ Spree::Promotion.class_eval do
       # code to the entry
 
       codes_downcase = codes.map { |pc| pc.code.downcase }
-      new_orders_promotions = Spree::OrdersPromotion.new(promotion_id: id, order_id: order.id)
+      new_orders_promotions = Spree::OrderPromotion.new(promotion_id: id, order_id: order.id)
       if order.coupon_code
         # User has entered a coupon code
         # Check if this promotion includes the code

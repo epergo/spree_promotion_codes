@@ -1,6 +1,6 @@
 Spree::Order.class_eval do
-  has_many :orders_promotions
-  has_many :promotions, through: :orders_promotions
+  has_many :order_promotions
+  has_many :promotions, through: :order_promotions
 
   def self.ransackable_scopes(auth_object = nil)
     %w(with_promotion_code)

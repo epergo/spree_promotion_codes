@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_promotion_codes'
-  s.version     = '3.0.6'
+  s.version     = '3.1.0'
   s.summary     = 'Allow multiple codes for Spree Promotions'
   s.required_ruby_version = '>= 2.1.0'
 
@@ -10,12 +10,12 @@ Gem::Specification.new do |s|
   s.email     = 'ej.perezgomez@gmail.com'
   s.license   = 'BSD-3'
 
-  # s.files       = `git ls-files`.split("\n")
-  # s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files       = `git ls-files`.split("\n")
+  s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '>= 3.0.0'
+  s.add_dependency 'spree_core', '~> 3.1.0'
 
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-rails'
